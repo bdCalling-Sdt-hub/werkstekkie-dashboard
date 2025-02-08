@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "PT Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  /* overflow-x: hidden; */
+}
+
+.custom-modal .ant-modal-content {
+  background-color: #f7f7f7 !important;
+  color: #ffffffee !important;
+  border-radius: 8px;
+  min-height: 300px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+.custom-modal .ant-modal-header {
+  background-color: #ffffff1a !important;
+  border-bottom: none;
+}
+
+.custom-modal .ant-modal-footer {
+  background-color: #f1f1f11a !important;
+}
+
+.custom-modal .ant-modal-close-x {
+  color: #ffffff !important;
+}
