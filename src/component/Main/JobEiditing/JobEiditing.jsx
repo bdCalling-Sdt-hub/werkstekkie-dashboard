@@ -8,6 +8,7 @@ const JobEditForm = () => {
   const { id } = useParams();
   console.log(id)
   const { data: jobData, isLoading } = useGetsinleJobQuery(id);
+  const fromdata= jobData?.data?.attributes?.result
   const [updateJob, { isLoading: isUpdating }] = useUpdateJobsMutation();
   const navigate = useNavigate();
 
@@ -26,23 +27,26 @@ const JobEditForm = () => {
   });
 
   useEffect(() => {
-    if (jobData?.data?.attributes?.job) {
-      const job = jobData.data.attributes.job;
+    if (fromdata) {
+      
       setFormData({
-        title: job.title || "",
-        company: job.company || "",
-        location: job.location || "",
-        jobType: job.jobType || "Full Time",
-        category: job.category || "Design",
-        salary: job.salary || "",
-        experienceLevel: job.experienceLevel || "Junior",
-        workPlace: job.workPlace || "On site",
-        expireDate: job.expireDate || "",
-        description: job.description || "",
+        title: fromdata.title,
+        company: fromdata.company ,
+        location: fromdata.location ,
+        jobType: fromdata.jobType || "Full Time",
+        category: fromdata.category || "Design",
+        salary: fromdata.salary ,
+        experienceLevel: fromdata.experienceLevel || "Junior",
+        workPlace: fromdata.workPlace || "On site",
+        expireDate: fromdata.expireDate ,
+        description: fromdata.description ,
         image: null, // Reset image for re-selection
       });
     }
   }, [jobData]);
+
+
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

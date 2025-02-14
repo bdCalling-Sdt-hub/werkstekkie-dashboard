@@ -2,12 +2,12 @@ import { useState, useRef } from "react";
 import { FaUser, FaEnvelope } from "react-icons/fa";
  
  
-import { useUpdateUserMutation } from "../../../redux/features/setting/settingApi";
+import { useGetUserQuery, useUpdateUserMutation } from "../../../redux/features/setting/settingApi";
 import { toast } from "sonner";
  
 
 const ProfileSettings = () => {
-  const [fullName, setFullName] = useState("Devid Jhon");
+  const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -16,6 +16,11 @@ const ProfileSettings = () => {
   const fileInputRef = useRef(null);
 
   const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const{data} = useGetUserQuery();
+
+ const profile= data?.data?.attributes
+
+
 
   // Handle Image Upload
   const handleImageUpload = (e) => {

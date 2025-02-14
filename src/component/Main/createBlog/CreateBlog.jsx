@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useBlogPostMutation } from '../../../redux/blog/blogApi';
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
  // Adjust the import path
 
 const CreateBlogPost = () => {
@@ -8,6 +11,7 @@ const CreateBlogPost = () => {
   const [category, setCategory] = useState('job');
   const [tag, setTag] = useState([]);
   const [featureImage, setFeatureImage] = useState(null);
+ const navigate=useNavigate()
 
   const [blogPost, { isLoading, isError }] = useBlogPostMutation();
 
@@ -34,10 +38,13 @@ const CreateBlogPost = () => {
 
       // Perform the mutation to post the blog
       const response = await blogPost(formData).unwrap();
-      console.log('Blog Post Success:', response);
+      toast.success('Blog Post Success:', response);
+
+      navigate("/blog")
 
     } catch (error) {
       console.error('Error posting blog:', error);
+      toast.error("Error posting blog")
     }
   };
 

@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useBlogUpdateMutation, useSingleBlogQuery } from "../../../redux/blog/blogApi";
 import { useEffect, useState } from "react";
 import { FaUpload } from "react-icons/fa";
@@ -8,7 +8,8 @@ const BlogEdit = () => {
   const { id } = useParams(); 
   const { data, isLoading: isFetching, error } = useSingleBlogQuery(id);
   const [blogUpdate, { isLoading: isUpdating }] = useBlogUpdateMutation();
- const navigate= Navigate()
+  const navigate = useNavigate()
+ 
   // ✅ State for user input
   const [formData, setFormData] = useState({
       title: "",
@@ -77,7 +78,9 @@ const BlogEdit = () => {
 
           await blogUpdate({ id, formData: updatedFormData }).unwrap();
           toast.success("Blog updated successfully!");
-          console.log(formData)
+          console.log(formData);
+          navigate("/blog")
+          
       } catch (error) {
           console.error("Error updating blog:", error);
           toast.error("Failed to update blog.");

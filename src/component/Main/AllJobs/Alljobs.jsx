@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Image, Modal } from "antd";
@@ -78,9 +79,11 @@ const AllJobs = () => {
       {/* Jobs List */}
       <div className="space-y-4">
         {jobList?.slice(0, entriesPerPage).map((job, index) => (
-          <div key={index} className="flex justify-between items-center p-4 bg-white shadow-md rounded-lg">
-            {/* Left Section */}
-            <div className="flex items-center">
+          <div
+            key={index}
+            className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition-shadow duration-300"
+          >
+             <div className="flex-shrink-0 ">
               <Image
                 src={getFullImageUrl(job.image)} // Ensure correct path
                 alt="Blog Image"
@@ -88,26 +91,45 @@ const AllJobs = () => {
                 height={50}
                 className="rounded-lg w-full"
               />
+            </div>
+            <div className="flex justify-between items-center">
+              
+              <h2 className="text-lg font-semibold">{job.title}</h2>
+              <span className="text-blue-600 font-bold">{job.salary}</span>
+            </div>
+            <div className="text-gray-500 text-sm mt-2 flex flex-wrap items-center space-x-5">
               <div>
-                <h3 className="text-xl font-semibold">{job.title}</h3>
-                <p className="text-gray-500">{job.company} | {job.location}</p>
-                <p className="text-gray-400 text-sm">{job.timeAgo}</p>
+                <span className="text-blue-500">{job.company}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                {/* Assuming you have an icon for location */}
+                <div>{job.location}</div>
+              </div>
+              <div className="flex items-center space-x-2">
+                {/* Assuming you have an icon for job type */}
+                <div>{job.employmentType}</div>
+              </div>
+              <div className="flex items-center space-x-2">
+                {/* Assuming you have an icon for posted time */}
+                <div>{job.posted}</div>
               </div>
             </div>
 
-            {/* Right Section */}
-            <div className="flex flex-col items-end">
-              <p className="text-blue-600 text-xl font-bold">{job.salary}</p>
-              <div className="flex space-x-2 mt-2">
+
+            {/* Actions */}
+            <div className="flex space-x-2 mt-4 justify-between">
+              <div className="space-x-2">
                 <button
                   onClick={() => handleViewJob(job)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md "
                 >
                   View
                 </button>
                 <Link to={`/jobEidite/${job._id}`}>
                   <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Edit</button>
                 </Link>
+              </div>
+              <div className="">
                 <button
                   onClick={() => handleDelete(job._id)}
                   className="bg-red-500 text-white px-4 py-2 rounded-md"
@@ -131,7 +153,6 @@ const AllJobs = () => {
           <div className="space-y-4">
             {/* Company Logo */}
             <div className="flex justify-center">
-
               <Image
                 src={getFullImageUrl(selectedJob.image)} // Ensure correct path
                 alt="Blog Image"
@@ -142,12 +163,12 @@ const AllJobs = () => {
             </div>
 
             {/* Job Title & Company */}
-            <h2 className="text-2xl font-bold text-center">title:{selectedJob.title}</h2>
-            <p className="text-center text-gray-500">company: {selectedJob.company}</p>
-            <p className="text-center text-gray-500">location:  {selectedJob.location}</p>
+            <h2 className="text-2xl font-bold text-center">{selectedJob.title}</h2>
+            <p className="text-center text-gray-500">{selectedJob.company}</p>
+            <p className="text-center text-gray-500">{selectedJob.location}</p>
 
             {/* Salary & Posted Time */}
-            <p className="text-center text-blue-600 text-xl font-bold">salary:{selectedJob.salary}</p>
+            <p className="text-center text-blue-600 text-xl font-bold">{selectedJob.salary}</p>
             <p className="text-center text-gray-400 text-sm">{selectedJob.timeAgo}</p>
 
             {/* Job Description */}
@@ -173,3 +194,4 @@ const AllJobs = () => {
 };
 
 export default AllJobs;
+
