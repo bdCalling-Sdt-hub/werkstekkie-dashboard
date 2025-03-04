@@ -4,7 +4,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../redux/features/auth/authSlice";
-import LogoImage from "../../../assets/auth/Logo.png";
+import LogoImage from "../../../assets/auth/logo.png";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaBriefcase, FaBuilding, FaCheckSquare,   FaCog,   FaHeadphones,   FaTh,  FaUserTie } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -75,9 +75,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       {/* Desktop Sidebar */}
       <div className="hidden md:block w-[330px] h-[100vh] bg-[#0741AD] fixed shadow-2xl z-20 ">
         <div className="flex-col flex justify-between items-center py-3 text-white flex-grow">
-          <img src={LogoImage} alt="logo" className="w-32 h-12 " />
+          <img src={LogoImage} alt="logo" className=" w-[200px] h-[36.297px] bg-[#FEFEFE] " />
         </div>
-        <div className="border-b border-gray-500"></div>
+       
         <div className="flex flex-col justify-between h-[90%]">
           <div>
             <ul className="w-full flex flex-col gap-3 mt-[15px]">
@@ -88,8 +88,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                   className={({ isActive }) =>
                     `w-[60%] mx-auto px-2 py-2 flex justify-start items-center gap-3 transition duration-100 ease-linear hover:pl-3 ${
                       isActive
-                        ? "bg-[#004838] text-white rounded-md border-l-4 border-[#98DED9]"
-                        : "text-[#737373]"
+                        ? "bg-[#052E7B] text-[#FEFEFE] rounded-md border-l-4 border-[#FEFEFE]]"
+                        : "text-[#FEFEFE]"
                     }`
                   }
                 >

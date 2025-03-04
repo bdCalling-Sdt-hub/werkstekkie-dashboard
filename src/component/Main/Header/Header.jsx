@@ -27,17 +27,11 @@ const Header = () => {
   return (
     <div className="border-t-2 border-purple-500 flex justify-between items-center py-3 px-5 shadow-lg">
       {/* Search Bar Section */}
-      <div className="flex items-center space-x-3 w-1/4">
-        <input
-          type="text"
-          placeholder="Type to search..."
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        />
-      </div>
+      
 
       {/* Date and Notification Icon */}
-      <div className="flex items-center space-x-4">
-        <span className="text-blue-600">{new Date().toLocaleDateString()}</span>
+      <div className="flex items-center space-x-4  mx-auto ">
+        <span className="text-blue-600 text-center">{new Date().toLocaleDateString()}</span>
         {/* Notification Icon */}
 
       </div>

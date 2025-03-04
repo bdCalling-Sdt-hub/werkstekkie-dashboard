@@ -12,11 +12,12 @@ const Shortlist = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [downloadUser, setDownloadUser] = useState(null);
+  // console.log(`sadddddddddddddddddddd`,downloadUser)
 
   // Fetch shortlisted candidates from API
   const { data, isLoading, isError } = useGetShortListQuery();
   const shortlistedCandidates = data?.data?.attributes || [];
-
+  console.log(`shortlist`,shortlistedCandidates)
   // Handle loading and error states
   if (isLoading) return <p className="text-center mt-10">Loading shortlisted candidates...</p>;
   if (isError) return <p className="text-center mt-10 text-red-500">Failed to load data</p>;
@@ -43,6 +44,73 @@ const Shortlist = () => {
 
   // Close Download Popup
   const closeDownloadPopup = () => setDownloadUser(null);
+
+  const handleResumeDownload = async (resumeUrl) => {
+    if (!resumeUrl) {
+      toast.error("Resume not available for download.");
+      return;
+    }
+
+    const fileUrl = resumeUrl.startsWith("http")
+      ? resumeUrl
+      : `https://aminula5000.sobhoy.com/uploads/users/${resumeUrl}`;
+
+    try {
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", resumeUrl.split("/").pop());
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+    } catch (error) {
+      toast.error("Error downloading resume.");
+    }
+  };
+
+  const handleCoverLetterDownload = async (coverLetterUrl) => {
+    if (!coverLetterUrl) {
+      toast.error("Cover Letter not available for download.");
+      return;
+    }
+  
+    // Construct proper URL
+    const fileUrl = coverLetterUrl.startsWith("http")
+      ? coverLetterUrl
+      : `https://aminula5000.sobhoy.com/uploads/users/${coverLetterUrl}`;
+  
+    console.log("Downloading Cover Letter from:", fileUrl); // Debugging
+  
+    try {
+      const response = await fetch(fileUrl);
+      if (!response.ok) {
+        throw new Error("File not found or inaccessible.");
+      }
+  
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+  
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", "Cover_Letter.pdf"); // Use a fixed filename
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+      toast.success("Cover Letter Downloaded Successfully!");
+    } catch (error) {
+      console.error("Download Error:", error);
+      toast.error("Error downloading cover letter.");
+    }
+  };
+  
+  
 
   // Download PDF
   const generatePDF = (user) => {
@@ -156,8 +224,8 @@ const Shortlist = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-1/3">
             <h2 className="text-2xl font-bold mb-4">Download Options</h2>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-2 w-full">Download Resume</button>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-2 w-full">Download Cover Letter</button>
+            <button onClick={()=>handleResumeDownload(downloadUser.resume)} className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-2 w-full">Download Resume</button>
+            <button onClick={()=>handleCoverLetterDownload(downloadUser.coverLetter)}  className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-2 w-full">Download Cover Letter</button>
             <button onClick={() => generatePDF(downloadUser)} className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full">Download All Info (PDF)</button>
             <button onClick={closeDownloadPopup} className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg w-full">Cancel</button>
           </div>

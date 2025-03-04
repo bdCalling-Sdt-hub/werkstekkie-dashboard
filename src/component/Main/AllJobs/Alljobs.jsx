@@ -1,24 +1,41 @@
 
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Image, Modal } from "antd";
 import { useDeleteJobsMutation, useGetAlljobsQuery } from "../../../redux/features/allJobs/allJobApi";
 import { ImageBaseUrl } from "../../../redux/blog/blogImageApi";
+import { FaMapLocation } from "react-icons/fa6";
+import { PiBagSimpleDuotone } from "react-icons/pi";
+import { GoClock } from "react-icons/go";
 
 const AllJobs = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const { data: jobs, isLoading, error, refetch } = useGetAlljobsQuery();
   const [deleteJob] = useDeleteJobsMutation();
-  const jobList = jobs?.data?.attributes;
+  const jobList = jobs?.data?.attributes || [];
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(jobList.length / entriesPerPage);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  // Pagination Logic
+  const startIndex = (currentPage - 1) * entriesPerPage;
+  const paginatedJobs = jobList.slice(startIndex, startIndex + entriesPerPage);
 
   // Modal State
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
   const getFullImageUrl = (path) => {
-    if (!path) return "/default-image.jpg"; // If `featureImage` is missing, use a default image
-    if (path.startsWith("http")) return path; // If it's already a full URL, return as is
-    return `${ImageBaseUrl}${path}`; // Convert relative path to absolute URL
+    if (!path) return "/default-image.jpg";
+    if (path.startsWith("http")) return path;
+    return `${ImageBaseUrl}${path}`;
   };
 
   const handleDelete = async (id) => {
@@ -64,7 +81,10 @@ const AllJobs = () => {
           <select
             id="entriesPerPage"
             value={entriesPerPage}
-            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            onChange={(e) => {
+              setEntriesPerPage(Number(e.target.value));
+              setCurrentPage(1); // Reset to first page
+            }}
             className="px-4 py-2 border rounded-md"
           >
             {[5, 10, 15].map((option) => (
@@ -78,43 +98,52 @@ const AllJobs = () => {
 
       {/* Jobs List */}
       <div className="space-y-4">
-        {jobList?.slice(0, entriesPerPage).map((job, index) => (
+        {paginatedJobs.map((job, index) => (
           <div
             key={index}
             className="border rounded-lg shadow-sm p-4 bg-white hover:shadow-md transition-shadow duration-300"
           >
-             <div className="flex-shrink-0 ">
-              <Image
-                src={getFullImageUrl(job.image)} // Ensure correct path
-                alt="Blog Image"
-                width={50}
-                height={50}
-                className="rounded-lg w-full"
-              />
+            {/* Right Side: Job Salary (Positioned Top-Right) */}
+            <div className="absolute right-5 text-blue-600 font-bold">
+              ${job.salary}
             </div>
-            <div className="flex justify-between items-center">
-              
-              <h2 className="text-lg font-semibold">{job.title}</h2>
-              <span className="text-blue-600 font-bold">{job.salary}</span>
-            </div>
-            <div className="text-gray-500 text-sm mt-2 flex flex-wrap items-center space-x-5">
-              <div>
-                <span className="text-blue-500">{job.company}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Assuming you have an icon for location */}
-                <div>{job.location}</div>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Assuming you have an icon for job type */}
-                <div>{job.employmentType}</div>
-              </div>
-              <div className="flex items-center space-x-2">
-                {/* Assuming you have an icon for posted time */}
-                <div>{job.posted}</div>
-              </div>
-            </div>
+            <div className="flex items-center space-x-4">
 
+              <div className="flex-shrink-0">
+                <Image
+                  src={getFullImageUrl(job.image)}
+                  alt="Company Logo"
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 rounded-full"
+                />
+              </div>
+
+              <div className="flex-grow lg:flex justify-between items-center space-x-4">
+
+                <div className="sm:flex-grow ">
+                  <h2 className="text-xl font-semibold ">{job.title}</h2>
+                  <div className="flex flex-wrap items-center lg:space-x-4 text-gray-500 text-sm">
+                    <div className="flex items-center">
+                      <span className=" text-[#4379F2] font-semibold">{job.company}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <FaMapLocation />
+                      <span>{job.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <PiBagSimpleDuotone />
+                      <span>{job.employmentType}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <GoClock />
+                      <span>{job.posted}</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Actions */}
             <div className="flex space-x-2 mt-4 justify-between">
@@ -129,20 +158,53 @@ const AllJobs = () => {
                   <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Edit</button>
                 </Link>
               </div>
-              <div className="">
-                <button
-                  onClick={() => handleDelete(job._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md"
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                onClick={() => handleDelete(job._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-md"
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
-      </div>
 
-      {/* Job Details Modal */}
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center space-x-2  mt-6">
+            {/* Previous Button */}
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`w-8 h-8 flex items-center justify-center rounded-full ${currentPage === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-gray-200 hover:bg-gray-400"
+                }`}
+            >
+              {"<"}
+            </button>
+
+            {/* Page Numbers */}
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`w-8 h-8 flex items-center justify-center rounded ${currentPage === page ? "bg-blue-600 text-white" : "bg-gray-200 hover:bg-gray-400"
+                  }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`w-8 h-8 flex items-center justify-center rounded-full ${currentPage === totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-gray-200 hover:bg-gray-400"
+                }`}
+            >
+              {">"}
+            </button>
+          </div>
+        )}
+      </div>
       <Modal
         title="Job Details"
         visible={isModalVisible}
@@ -163,13 +225,13 @@ const AllJobs = () => {
             </div>
 
             {/* Job Title & Company */}
-            <h2 className="text-2xl font-bold text-center">{selectedJob.title}</h2>
-            <p className="text-center text-gray-500">{selectedJob.company}</p>
-            <p className="text-center text-gray-500">{selectedJob.location}</p>
+            <h2 className="text-2xl font-bold text-center">Title: {selectedJob.title}</h2>
+            <p className="text-center text-gray-500">company Name: {selectedJob.company}</p>
+            <p className="text-center text-gray-500">location: {selectedJob.location}</p>
 
             {/* Salary & Posted Time */}
-            <p className="text-center text-blue-600 text-xl font-bold">{selectedJob.salary}</p>
-            <p className="text-center text-gray-400 text-sm">{selectedJob.timeAgo}</p>
+            <p className="text-center text-blue-600 text-xl font-bold">salary:{selectedJob.salary}</p>
+            <p className="text-center text-gray-400 text-sm">posted time: {selectedJob.posted}</p>
 
             {/* Job Description */}
             <div className="mt-4">
@@ -194,4 +256,3 @@ const AllJobs = () => {
 };
 
 export default AllJobs;
-

@@ -1,56 +1,54 @@
 import React, { useState } from 'react';
 import { useBlogPostMutation } from '../../../redux/blog/blogApi';
 import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
- // Adjust the import path
 
 const CreateBlogPost = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('job');
-  const [tag, setTag] = useState([]);
+  const [tag, setTag] = useState();
   const [featureImage, setFeatureImage] = useState(null);
- const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const [blogPost, { isLoading, isError }] = useBlogPostMutation();
+  const [blogPost, { isLoading }] = useBlogPostMutation();
 
   const handleFeatureImageUpload = (e) => {
     setFeatureImage(e.target.files[0]);
   };
 
   const handleTagChange = (e) => {
-    const selectedTag = Array.from(e.target.selectedOptions, option => option.value);
-    setTag(selectedTag);
+    const selectedTags = Array.from(e.target.selectedOptions, (option) => option.value); // Join tags into a string
+    console.log("Selected Tags:", selectedTags); // Debug log to check the result
+    setTag(selectedTags); // Store as a string
   };
-
-  const handlePublish = async () => {
+  
+  
+  const handleSubmit = async (status, redirect = false) => {
     try {
-      // Create a new FormData object
       const formData = new FormData();
-      
-      // Append all form fields to FormData
       formData.append('title', title);
       formData.append('content', content);
       formData.append('category', category);
-      formData.append('tags', JSON.stringify(tag));  // Convert tags array to a string
-      if (featureImage) formData.append('featureImage', featureImage);  // Append the file if selected
+      formData.append('tag', tag);
+      if (featureImage) formData.append('featureImage', featureImage);
+      formData.append('status', status); // Append the status
 
-      // Perform the mutation to post the blog
       const response = await blogPost(formData).unwrap();
-      toast.success('Blog Post Success:', response);
+      toast.success(`Blog Post ${status} Successfully`);
 
-      navigate("/blog")
-
+      // Only navigate if publishing
+     
+        navigate('/blog');
+     
     } catch (error) {
-      console.error('Error posting blog:', error);
-      toast.error("Error posting blog")
+      console.error(`Error posting blog (${status}):`, error);
+      toast.error(`Error posting blog (${status})`);
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-lg flex gap-8">
-      {/* Left Section */}
       <div className="flex-1">
         <h2 className="text-2xl font-semibold mb-6">Create New Blog Post</h2>
 
@@ -122,13 +120,14 @@ const CreateBlogPost = () => {
         {/* Buttons */}
         <div className="flex justify-between items-center">
           <button
-            onClick={() => console.log('Draft saved')}
+            onClick={() => handleSubmit('Draft', false)}
             className="bg-gray-500 text-white px-6 py-3 rounded-md shadow-lg hover:bg-gray-600"
+            disabled={isLoading}
           >
-            Draft
+            {isLoading ? 'Saving...' : 'Save as Draft'}
           </button>
           <button
-            onClick={handlePublish}
+            onClick={() => handleSubmit('Published', true)}
             className="bg-blue-500 text-white px-6 py-3 rounded-md shadow-lg hover:bg-blue-600"
             disabled={isLoading}
           >
