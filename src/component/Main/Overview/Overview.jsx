@@ -114,7 +114,7 @@ const Overview = () => {
                             </button>
                         </div>
                         <table className="min-w-full table-auto">
-                            <thead>
+                            <thead className="bg-[#F7F9FC]">
                                 <tr className="border-b">
                                     <th className="px-4 py-2 text-left text-gray-500">Job Title</th>
                                     <th className="px-4 py-2  text-gray-500 text-right">Application</th>
@@ -154,7 +154,7 @@ const Overview = () => {
                                 <p className="text-center">Loading...</p>
                             ) : (
                                 recent?.map((applicant, index) => (
-                                    <div key={index} className="flex items-center space-x-4">
+                                    <div key={index} className="flex items-center space-x-4 bg-[#F7F7F7]">
                                         
                                         <div className="flex justify-center">
                                             <Image

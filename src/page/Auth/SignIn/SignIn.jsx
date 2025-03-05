@@ -1,5 +1,6 @@
 
 import LogoImage from "../../../assets/auth/Logo.png";
+import Illustration from "../../../assets/auth/singIn.png"; 
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Checkbox } from "antd";
 import { HiOutlineLockClosed, HiOutlineMail } from "react-icons/hi";
@@ -9,7 +10,6 @@ import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { loggedUser } from "../../../redux/features/auth/authSlice";
 import { useLoginMutation } from "../../../redux/features/auth/authApi";
-
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -21,94 +21,75 @@ const SignIn = () => {
     try {
       const res = await login({ email, password });
       if (res.error) {
-        // Show error message if login fails
         toast.error(res.error.data.message);
       } else if (res.data) {
         const user = res?.data?.data?.attributes.user;
-        const token =  res?.data?.data?.attributes?.tokens?.accessToken
-        // console.log(token)
-        // console.log(res.data)
-        dispatch(
-          loggedUser({user, token})
-        );
+        const token = res?.data?.data?.attributes?.tokens?.accessToken;
+        dispatch(loggedUser({ user, token }));
         toast.success(res.data.message);
-        navigate("/");  // Navigate to the root page after successful login
+        navigate("/");
       }
     } catch (error) {
-      // Handle unexpected errors
       toast.error("Something went wrong");
       console.log(error);
     }
   };
 
   return (
-    <div className="bg-[#121212]">
-      <div className="w-full md:max-w-xl mx-auto h-full md:h-screen  place-content-center px-5 py-10 ">
-      <div className="mt-5 md:mt-20 px-8 bg-[#6666661A] p-5 rounded-md">
-        <div className="mb-8">
-          <img
-            src={LogoImage}
-            className="w-[170px] h-[70px]  mb-3 "
-            alt="Logo"
-          />
-          <h1 className="font-semibold text-3xl text-white">Hello, Welcome!</h1>
-          <p className="text-white">
-            Please Enter Your Details Below to Continue
-          </p>
+    <div className="flex min-h-screen bg-[#0057B7] justify-center items-center">
+      <div className="w-[80%] md:w-[60%]  rounded-lg  flex">
+        {/* Left side - Illustration */}
+        <div className="hidden md:flex w-1/2  justify-center items-center rounded-l-lg ">
+          <img src={Illustration} alt="Illustration" className=" w-[586px] h-[586px] " />
         </div>
-        <Form
-          layout="vertical"
-          onFinish={handleSubmit}
-          className="space-y-4"
-          initialValues={{
-            remember: true,
-          }}
-        >
-          <Form.Item
-            label={<span style={{ color: "#FFFFFF" }}>Email</span>}
-            name="email"
-            rules={[
-              { required: true, message: "Please input your email!" },
-              { type: "email", message: "The input is not a valid email!" },
-            ]}
-          >
-            <CustomInput
-              type="email"
-              icon={HiOutlineMail}
-              placeholder="Email"
-            />
-          </Form.Item>
 
-          <Form.Item
-            label={<span style={{ color: "#FFFFFF" }}>Password</span>}
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <CustomInput
-              type="password"
-              icon={HiOutlineLockClosed}
-              placeholder="Password"
-              isPassword
-            />
-          </Form.Item>
-
-          <div className="flex justify-between items-center">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox className="text-white">Remember me</Checkbox>
-            </Form.Item>
-            <Link to="/auth/forget-password" className="text-[#1397D5]">
-              Forgot password?
-            </Link>
+        {/* Right side - Form */}
+        <div className="w-[590px] h-[520.2965087890625px] bg-[#F5F5F5] md:w-1/2 p-8 rounded-lg">
+          <div className="flex flex-col items-center">
+            <img src={LogoImage} className="w-[250px] mb-4" alt="Logo" />
+            
           </div>
+          <h1 className="text-2xl font-semibold text-gray-800">Meld u aan</h1>
 
-          <Form.Item>
-            <CustomButton loading={isLoading} className="w-full" border={true}>
-              Sign In
-            </CustomButton>
-          </Form.Item>
-        </Form>
+          <Form layout="vertical" onFinish={handleSubmit} className="mt-6">
+            <Form.Item
+              label={<span className="text-gray-700">Uw e-mail</span>}
+              name="email"
+              rules={[
+                { required: true, message: "Please enter your email!" },
+                { type: "email", message: "Invalid email address!" }
+              ]}
+            >
+              <CustomInput className="bg-white w-[510px] h-[56px]" type="email" icon={HiOutlineMail} placeholder="voorbeeld@gmail.com" />
+            </Form.Item>
+
+            <Form.Item
+              label={<span className="text-gray-700">Wachtwoord</span>}
+              name="password"
+              rules={[{ required: true, message: "Please enter your password!" }]}
+            >
+              <CustomInput className="bg-white w-[510px] h-[56px]" type="password" icon={HiOutlineLockClosed} placeholder="Wachtwoord" isPassword />
+            </Form.Item>
+
+            <div className="flex justify-between items-center text-gray-700">
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox>Onthoud mij</Checkbox>
+              </Form.Item>
+              <Link to="/auth/forget-password" className="text-blue-500 hover:underline">
+                Wachtwoord vergeten?
+              </Link>
+            </div>
+
+            <Form.Item>
+              <button loading={isLoading} className="w-full h-[44px] bg-[#0741AD] mt-5 text-white py-2 rounded-md hover:bg-blue-700">
+                Aanmelden
+              </button>
+            </Form.Item>
+          </Form>
+        </div>
+
+        
       </div>
-    </div>
     </div>
   );
 };

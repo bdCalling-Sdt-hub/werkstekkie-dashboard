@@ -25,7 +25,7 @@ const Header = () => {
 
 
   return (
-    <div className="border-t-2 border-purple-500 flex justify-between items-center py-3 px-5 shadow-lg">
+    <div className="border-t-2 bg-[#FEFEFE] border-purple-500 flex justify-between items-center py-3 px-5 shadow-lg">
       {/* Search Bar Section */}
       
 
