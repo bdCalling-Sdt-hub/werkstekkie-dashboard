@@ -17,14 +17,14 @@ const Overview = () => {
     const { data: totalApplications, isLoading: loadingApplications } = useGetTotalApplicaitonQuery();
     const { data: totalJobs, isLoading: loadingJobs } = useGetTotalJobsQuery();
     const { data: totalShortlist, isLoading: loadingShortlist } = useGetTotalShortlistQuery();
-    console.log(totalShortlist)
+ 
     const { data: activeJobs, isLoading: loadingActiveJobs } = useGetActiveJobsQuery();  // Fixed missing isLoading variable
-    console.log(activeJobs)
+   
     const { data: recentApplied, isLoading: loadingRecent } = useGetRecentAppliedQuery();
 
     const recent = recentApplied?.data?.attributes;
     const jobactive = activeJobs?.data?.attributes || []; // Ensure it's an array to prevent errors
-    console.log(`Applicate`,recent)
+   
 
     const handleRefetch = () => {
         jobactive(); // Trigger the fetchJobs function again
