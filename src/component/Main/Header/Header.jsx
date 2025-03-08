@@ -74,13 +74,14 @@
 /* eslint-disable react/prop-types */
 
 import { useState, useRef, useEffect } from "react";
-import { FiBell } from "react-icons/fi";
+import { FiBell, FiMenu } from "react-icons/fi";
 import { Image } from "antd";
 import { useGetUserQuery } from "../../../redux/features/setting/settingApi";
 import { ImageBaseUrl } from "../../../redux/blog/blogImageApi";
 import { useGetNotificationQuery } from "../../../redux/features/notification/notificatioin";
 
-const Header = () => {
+const Header = ({toggleSidebar}) => {
+
   const { data } = useGetUserQuery({});
   const user = data?.data.attributes;
   const [showNotifications, setShowNotifications] = useState(false);
@@ -112,9 +113,15 @@ const Header = () => {
   };
 
   return (
-    <div className="border-t-2 bg-[#FEFEFE] border-purple-500 flex justify-between items-center py-3 px-5 shadow-lg relative">
+    <div className="w-full border-t-2 bg-[#FEFEFE]  flex justify-between items-center py-3 px-5 shadow-lg relative">
       {/* Date Section */}
-      <div className="flex items-center space-x-4 mx-auto">
+      <button
+        className="md:hidden text-gray-500 text-2xl"
+        onClick={toggleSidebar}
+      >
+        <FiMenu />
+      </button>
+      <div className="lg:flex items-center space-x-4 mx-auto sm: hidden">
         <span className="text-blue-600 text-center">
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -157,35 +164,37 @@ const Header = () => {
                     >
 
                       {/* Notification Avatar (if exists) */}
-                      <div>
-                        {notif?.user && (
-                          <Image
-                            src={getFullImageUrl(notif.user.profileImage)}
-                            alt="Notif Avatar"
-                            width={30}
-                            height={30}
-                            className="w-full h-full rounded-full mr-5"
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <h1 className="text-gray-800 font-bold px-3">{notif?.user.fullName}</h1>
-                        <p className="text-gray-800 font-medium px-3">{notif?.message || "New Notification"}</p>
-                        <span className="text-gray-500 text-xs px-3">
-                          {notif?.createdAt
-                            ? new Date(notif.createdAt).toLocaleDateString("en-US", {
-                              day: "numeric",
-                              month: "long",
-                            }) +
-                            " " +
-                            new Date(notif.createdAt).toLocaleTimeString("en-US", {
-                              hour: "numeric",
-                              minute: "numeric",
-                              hour12: true,
-                            })
-                            : "Just now"}
-                        </span>
+                      <div key={index} className="flex items-center ">
+                        <div>
+                          {notif?.user && (
+                            <Image
+                              src={getFullImageUrl(notif.user.profileImage)}
+                              alt="Notif Avatar"
+                              width={50}
+                              height={50}
+                              className="w-full h-full rounded-full mr-5"
+                            />
+                          )}
+                        </div>
+                        <div>
+                          <h1 className="text-gray-800 font-bold px-3">{notif?.user.fullName}</h1>
+                          <p className="text-gray-800 font-medium px-3">{notif?.message || "New Notification"}</p>
+                          <span className="text-gray-500 text-xs px-3">
+                            {notif?.createdAt
+                              ? new Date(notif.createdAt).toLocaleDateString("en-US", {
+                                day: "numeric",
+                                month: "long",
+                              }) +
+                              " " +
+                              new Date(notif.createdAt).toLocaleTimeString("en-US", {
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: true,
+                              })
+                              : "Just now"}
+                          </span>
 
+                        </div>
                       </div>
                     </div>
                   ))}

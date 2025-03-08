@@ -114,12 +114,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 left-0 z-40 w-64 h-full bg-[#3D3D3D] shadow-lg transform ${
+        className={`fixed top-0 left-0 z-40 w-64 h-full bg-[#0741AD] shadow-lg transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out md:hidden`}
       >
         <div className="flex flex-col justify-center items-center pt-5 gap-2 text-white">
-          <img src={LogoImage} alt="logo" className="w-32 h-12" />
+          <img src={LogoImage} alt="logo" className="w-32 h-12 bg-[#FEFEFE] " />
         </div>
         <ul className="w-full flex flex-col gap-3 mt-[15px]">
           {dynamicSidebarItems.map((item) => (
@@ -130,7 +130,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 `w-[60%] mx-auto px-2 py-2 flex justify-start items-center gap-3 transition duration-100 ease-linear hover:pl-3 ${
                   isActive
                     ? "bg-[#161D6F] text-white rounded-md border-l-4 border-[#98DED9]"
-                    : "text-[#737373]"
+                    : "text-[#FEFEFE]"
                 }`
               }
             >
