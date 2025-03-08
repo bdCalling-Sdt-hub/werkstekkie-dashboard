@@ -19,7 +19,7 @@ const MainLayout = () => {
         </div>
         <div className="">
           {/* bg-[#FAFBFC] */}
-          <div className="md:ml-[340px] px-3 pt-4">
+          <div className="md:ml-[340px] md:px-3 pt-4">
           <Outlet />
         </div>
         </div>
