@@ -111,7 +111,7 @@ const AllCandidate = () => {
     ];
 
     return (
-        <div className=" shadow-md mt-10 w-full ">
+        <div className="p-4 sm:p-6 shadow-md mt-10 w-full xl:w-full mx-auto">
             <ToastContainer />
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-4">
                 <Input
@@ -129,7 +129,7 @@ const AllCandidate = () => {
                         setEntriesPerPage(value);
                         setCurrentPage(1);
                     }}
-                    className="w-"
+                    className="w-full md:w-24"
                 >
                     <Option value={5}>5</Option>
                     <Option value={10}>10</Option>

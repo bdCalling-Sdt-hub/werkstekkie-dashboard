@@ -404,7 +404,7 @@ const Shortlist = () => {
   ];
 
   return (
-    <div className="p-8">
+    <div className="py-8 px-2 md:px-5">
       <ToastContainer />
 
       {/* Search and Entries Selection */}

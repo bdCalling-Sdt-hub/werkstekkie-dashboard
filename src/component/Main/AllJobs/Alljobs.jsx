@@ -67,7 +67,7 @@ const AllJobs = () => {
   if (error) return <p>Error fetching jobs!</p>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mx-2 md:mx-0">
       {/* Search & Entries Per Page */}
       <div className="flex justify-between items-center mb-4">
         <input
@@ -126,15 +126,15 @@ const AllJobs = () => {
                       <div className="flex items-center">
                         <span className=" text-[#4379F2] font-semibold">{job.company}</span>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 ml-5">
                         <FaMapLocation />
                         <span>{job.location}</span>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 ml-5">
                         <PiBagSimpleDuotone />
                         <span>{job.employmentType}</span>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 ml-5">
                         <GoClock />
                         <span>{job.posted}</span>
                       </div>
