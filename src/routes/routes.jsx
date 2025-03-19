@@ -7,10 +7,10 @@ import NewPassword from "../page/Auth/NewPassword/NewPassword";
 import AdminRoutes from "./AdminRoutes";
 import OverviewPage from "../page/Overview/OverviewPage";
 import AllCandidatePage from "../page/AllCandidate/AllCandidatePage";
-import ShortlistPage from "../page/Shortlist/ShortlistPage";
+
 import Shortlist from "../component/Main/Shortlist/Shortlist";
 import AlljobPage from "../page/Alljobs/AlljobPage";
-import JobEiditeForm from "../component/Main/jobEiditing/JobEiditing";
+
 import JobEiditePage from "../page/JobEidite/JobEiditePage";
 import JobPostingForm from "../component/Main/JobPost/JobPost";
 import BlogPostPage from "../page/BlogPost/BlogPostPage";
