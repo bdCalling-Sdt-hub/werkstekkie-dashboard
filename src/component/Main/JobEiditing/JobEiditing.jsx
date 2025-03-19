@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetsinleJobQuery, useUpdateJobsMutation } from "../../../redux/features/allJobs/allJobApi";
 import { toast } from "sonner";
-import { ImageBaseUrl } from "../../../redux/blog/blogImageApi";
+ 
 
 const JobEditForm = () => {
   const { id } = useParams();
