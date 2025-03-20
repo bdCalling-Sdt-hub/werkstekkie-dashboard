@@ -1,5 +1,5 @@
 
-// import LogoImage from "../../../assets/auth/Logo.png";
+// import LogoImage from "../../../assets/auth/logo.png";
 // import { Link, useNavigate, useParams } from "react-router-dom";
 // import { IoIosArrowBack } from "react-icons/io";
 // import OTPInput from "react-otp-input";
@@ -112,7 +112,7 @@
 
 
 
-import LogoImage from "../../../assets/auth/Logo.png";
+import LogoImage from "../../../assets/auth/logo.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import OTPInput from "react-otp-input";
