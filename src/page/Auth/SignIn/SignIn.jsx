@@ -1,5 +1,5 @@
 
-import LogoImage from "../../../assets/auth/Login.png";
+import LogoImage from "../../../assets/auth/Logo.png";
 import Illustration from "../../../assets/auth/singIn.png"; 
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Checkbox } from "antd";

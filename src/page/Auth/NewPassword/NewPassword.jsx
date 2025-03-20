@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import LogoImage from "../../../assets/auth/Login.png"; 
+import LogoImage from "../../../assets/auth/Logo.png"; 
 import { useNavigate } from "react-router-dom";
 import Illustration from "../../../assets/auth/singIn.png";
 

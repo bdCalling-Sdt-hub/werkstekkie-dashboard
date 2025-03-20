@@ -112,7 +112,7 @@
 
 
 
-import LogoImage from "../../../assets/auth/Login.png";
+import LogoImage from "../../../assets/auth/Logo.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import OTPInput from "react-otp-input";

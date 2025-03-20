@@ -9,7 +9,7 @@ import CustomInput from "../../../utils/CustomInput";
 import { HiOutlineMail } from "react-icons/hi";
  
 import { toast } from "sonner";
-import LogoImage from "../../../assets/auth/Login.png";
+import LogoImage from "../../../assets/auth/Logo.png";
 import IllustrationImage from "../../../assets/auth/singIn.png"; // Add this illustration
 import { useDispatch } from "react-redux";
 import { updateToken } from "../../../redux/features/auth/authSlice";
