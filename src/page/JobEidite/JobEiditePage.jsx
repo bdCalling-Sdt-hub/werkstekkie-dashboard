@@ -1,10 +1,9 @@
-import JobEiditeForm from "../../component/Main/jobEiditing/JobEiditing";
+import JobEditForm from "../../component/Main/JobEiditing/JobEiditing";
 
- 
 const JobEiditePage = () => {
  return (
  <div>
-    <JobEiditeForm />
+    <JobEditForm />
  </div>
  );
 };
