@@ -30,6 +30,15 @@ const CreateBlogPost = () => {
     setTag(selectedTags);
   };
 
+  const handleContentChange = (value) => {
+    if (value && typeof value === "string") {
+      setContent(value);
+    } else {
+      // Handle the case where value is undefined or not a string.
+      setContent('');
+    }
+  };
+
   const handleSubmit = async (status, redirect = false) => {
     try {
       // Log content to ensure it's properly updated
@@ -82,7 +91,7 @@ const CreateBlogPost = () => {
           <label className="block text-gray-700 font-semibold mb-2">Content</label>
           <ReactQuill
             value={content}
-            onChange={(e) => setContent(e)} // Ensure content is updated as the HTML string
+            onChange={setContent(handleContentChange)} // Ensure content is updated as the HTML string
             modules={modules}
             style={{ height: '150px' }}
           />
