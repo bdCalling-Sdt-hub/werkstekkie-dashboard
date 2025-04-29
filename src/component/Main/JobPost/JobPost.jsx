@@ -5,7 +5,7 @@
 // import { toast } from 'sonner';
 // import { useNavigate } from 'react-router-dom';
 // import ReactQuill from 'react-quill';
- 
+
 
 // const JobPostingForm = () => {
 //   const [postJob, { isLoading, isError }] = usePostJobMutation();
@@ -292,7 +292,7 @@ import { usePostJobMutation } from '../../../redux/features/allJobs/allJobApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
-import "react-quill/dist/quill.snow.css"
+import 'quill/dist/quill.snow.css';
 
 const JobPostingForm = () => {
   const [postJob, { isLoading, isError }] = usePostJobMutation();
@@ -396,7 +396,7 @@ const JobPostingForm = () => {
   const modules = {
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, 'bold', 'italic', 'underline'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       ['link'],
     ],
   };
