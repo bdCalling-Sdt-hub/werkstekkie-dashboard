@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "pokemonApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://aminula5000.sobhoy.com/api/v1",
+    baseUrl: "https://api.werkstekkie.com/api/v1",
     prepareHeaders: (headers, { getState }) => {
       // Retrieve the token from your store or local storage
       const token = getState().auth.token;
