@@ -172,8 +172,8 @@ import React, { useState } from "react";
 import { useBlogPostMutation } from "../../../redux/blog/blogApi";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
+
 
 const CreateBlogPost = () => {
   const [title, setTitle] = useState(''); // Ensure title is a string
@@ -235,7 +235,7 @@ const CreateBlogPost = () => {
   const modules = {
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, 'bold', 'italic', 'underline'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
       ['link'],
     ],
   };
@@ -264,8 +264,9 @@ const CreateBlogPost = () => {
             value={content || ''} // Ensure content is always a string (fallback to empty string if undefined)
             onChange={handleContentChange} // Ensure valid string is passed to setContent
             modules={modules}
-            style={{ height: '150px' }}
+            style={{ height: '250px' }}
           />
+        
         </div>
 
         {/* Feature Image */}

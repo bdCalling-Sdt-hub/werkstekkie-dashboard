@@ -292,6 +292,7 @@ import { usePostJobMutation } from '../../../redux/features/allJobs/allJobApi';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
+import "react-quill/dist/quill.snow.css"
 
 const JobPostingForm = () => {
   const [postJob, { isLoading, isError }] = usePostJobMutation();
