@@ -203,6 +203,7 @@ const Overview = () => {
     // Fetch data from API
     const { data: totalApplications, isLoading: loadingApplications } = useGetTotalApplicaitonQuery();
     const { data: totalJobs, isLoading: loadingJobs } = useGetTotalJobsQuery();
+    console.log(totalJobs)
     const { data: totalShortlist, isLoading: loadingShortlist } = useGetTotalShortlistQuery();
     const { data: activeJobs, isLoading: loadingActiveJobs } = useGetActiveJobsQuery();
     const { data: recentApplied, isLoading: loadingRecent } = useGetRecentAppliedQuery();
