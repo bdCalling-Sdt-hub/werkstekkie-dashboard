@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { Image, Modal } from "antd";
 import { useDeleteJobsMutation, useGetAlljobsQuery } from "../../../redux/features/allJobs/allJobApi";
@@ -15,6 +15,7 @@ const AllJobs = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(""); // New state for search
+  // Removed unused selectedJob state
 
   const totalPages = Math.ceil(jobList.length / entriesPerPage);
 
@@ -49,9 +50,8 @@ const AllJobs = () => {
     });
   };
 
-  const handleViewJob = (job) => {
-    setSelectedJob(job);
-    setIsModalVisible(true);
+  const handleViewJob = () => {
+    // You can add logic here if you want to display job details in the modal in the future
   };
 
   // Filter jobs based on the search query

@@ -1,16 +1,12 @@
-
-
-
-
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import {
   useDeleteFaqMutation,
   useFaqAddMutation,
   useGetAllFaqQuery,
 } from "../../../redux/faq/faqApi";
-import { toast } from "sonner";
 
 const CreateFAQ = () => {
   // Fetch all FAQs from the backend
@@ -95,9 +91,14 @@ const CreateFAQ = () => {
                 <tr key={_id} className="border-b hover:bg-gray-100 transition">
                   <td className="p-2">
                     <p className="font-medium">{faq.question}</p>
-                    <p className="text-sm text-gray-500">{faq.answer}</p>
+                    <div
+                      className="p-4 text-gray-700 bg-gray-50"
+                      dangerouslySetInnerHTML={{ __html: faq.answer }}
+                    />
                   </td>
-                  <td className="p-2 hidden sm:table-cell">{faq.createdDate}</td>
+                  <td className="p-2 hidden sm:table-cell">
+                    {faq.createdDate}
+                  </td>
                   <td className="p-2 flex  gap-2">
                     <Link to={`/faq/${faq._id}`}>
                       <button className="text-blue-600 p-2 rounded-md hover:bg-gray-200 transition">

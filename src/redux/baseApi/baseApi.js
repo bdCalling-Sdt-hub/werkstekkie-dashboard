@@ -4,6 +4,7 @@ export const baseApi = createApi({
   reducerPath: "pokemonApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.werkstekkie.com/api/v1",
+    // baseUrl: "https://aminula5000.sobhoy.com/api/v1",
     prepareHeaders: (headers, { getState }) => {
       // Retrieve the token from your store or local storage
       const token = getState().auth.token;
@@ -13,6 +14,6 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User", "Categories", "admin","shorlist", "blog", "job","faq"],
+  tagTypes: ["User", "Categories", "admin", "shorlist", "blog", "job", "faq"],
   endpoints: () => ({}),
 });
