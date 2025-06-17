@@ -239,6 +239,7 @@ const JobPostingForm = () => {
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-md shadow-sm"
           >
+            <option value="">Select experinceLavel</option>
             <option value="Senior">Senior</option>
             <option value="Junior">Junior</option>
             <option value="Internship">Internship</option>
