@@ -223,7 +223,7 @@ const JobPostingForm = () => {
             className="w-full px-4 py-2 border rounded-md shadow-sm"
           >
             <option value="">Select Job workPlace</option>
-            <option value="On Site">On Site</option>
+            <option value="On Site">On-Site</option>
             <option value="Remote">Remote</option>
           </select>
         </div>
